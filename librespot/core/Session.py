@@ -854,7 +854,7 @@ class Session(Closeable, SubListener, DealerClient.MessageListener):
 
     class SpotifyAuthenticationException(Exception):
         def __init__(self, login_failed: Keyexchange.APLoginFailed):
-            super().__init__(login_failed.error_code.name)
+            super().__init__(login_failed)
 
     class Accumulator:
         buffer: bytes = bytes()
@@ -964,6 +964,7 @@ class Session(Closeable, SubListener, DealerClient.MessageListener):
                     # noinspection PyProtectedMember
                     packet = self.session._cipherPair.receive_encoded(
                         self.session._conn)
+                    print(packet)
                     cmd = Packet.Type.parse(packet.cmd)
                     if cmd is None:
                         self.session._LOGGER.info(
