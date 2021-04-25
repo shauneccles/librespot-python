@@ -1,4 +1,4 @@
-# This file is in .gitignore = you can place your details here for ease of testing
+# Rename this to spotify_secrets.py when you have added your username/password
 
 class Credentials:
     username = "YOUR_SPOTIFY_USERNAME"

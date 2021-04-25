@@ -25,9 +25,9 @@ class PlayableContentFeeder:
         if len(track.file) > 0:
             return track
 
-        for alt in track.alternative_list:
+        for alt in track.alternative:
             if len(alt.file) > 0:
-                pass
+                return alt
 
         return None
 
@@ -65,7 +65,7 @@ class PlayableContentFeeder:
                 track_id_or_track)
             track = self.pick_alternative_if_necessary(original)
             if track is None:
-                raise
+                raise Exception("No Track")
         else:
             track = track_id_or_track
         file = audio_quality_picker.get_file(track.file)

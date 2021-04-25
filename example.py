@@ -8,21 +8,28 @@ assert numpy
 
 def get_session(username,password):
     active_session = Session.Builder().user_pass(username, password).create()
-    
-    access_token = active_session.tokens().get("playlist-read")
-    print(f"Your Spotify Access Token is:{access_token}")
+    print(f"Logged in Successfully")
     return active_session
 
-def get_audio_data(session,track_uri):
+def get_audio_stream_session(session,track_uri):
     
     track_id = TrackId.from_uri(track_uri)
-    stream = session.content_feeder().load(track_id, VorbisOnlyAudioQuality(AudioQuality.AudioQuality.VERY_HIGH), False, None)
+    audio_stream_session = session.content_feeder().load(track_id, VorbisOnlyAudioQuality(AudioQuality.AudioQuality.VERY_HIGH), False, None)
 
-    return stream
+    return audio_stream_session
 
+def get_audio_stream_data(audio_stream_session):
+    return audio_stream_session.input_stream.stream().read()
+
+
+# This doesn't work
 def play_audio(active_session,desired_track_uri):
+    active_session = get_audio_stream_session(session=active_session,track_uri=desired_track_uri)
+    data = get_audio_stream_data(active_session)
     try:
-        sd.play(get_audio_data(session=active_session,track_uri=desired_track_uri))
+        
+        sd.play(data)
+        print("We're trying to play!")
     except KeyboardInterrupt:
             print("Exiting!")
     except Exception as e:
