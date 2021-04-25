@@ -1,6 +1,7 @@
 from librespot.player.codecs import AudioQuality, VorbisOnlyAudioQuality
 from librespot.core import Session
 from librespot.metadata import TrackId 
+from spotify_secrets import Credentials
 import sounddevice as sd
 import numpy
 assert numpy
@@ -29,5 +30,5 @@ def play_audio(active_session,desired_track_uri):
            raise SystemExit
 
 if __name__ == "__main__":
-    active_session = get_session(username="<username>",password="<password>")
+    active_session = get_session(username=Credentials.username,password=Credentials.password)
     play_audio(active_session=active_session,desired_track_uri="spotify:track:4uLU6hMCjMI75M1A2tKUQC")
